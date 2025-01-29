@@ -39,10 +39,22 @@ func (pc ProductsController) Index(c *gin.Context) {
 }
 
 func (pc ProductsController) Show(c *gin.Context) {
-	var products []models.Product
+	var products models.Product
+	id := c.Param("id")
 
 	// Ambil semua data produk dari database
-	models.DB.Find(&products)
+	models.DB.Where("id = ?", id).Find(&products)
+
+	// Kirimkan data produk dalam format JSON
+	c.JSON(http.StatusOK, gin.H{"products": products})
+}
+
+func (pc ProductsController) Shownama(c *gin.Context) {
+	var products models.Product
+	id := c.Param("id")
+
+	// Ambil semua data produk dari database
+	models.DB.Where("id = ?", id).Select("nama").Find(&products)
 
 	// Kirimkan data produk dalam format JSON
 	c.JSON(http.StatusOK, gin.H{"products": products})
