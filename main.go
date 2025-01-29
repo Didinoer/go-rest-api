@@ -18,6 +18,8 @@ func main() {
 
 	// Tambahkan endpoint
 	r.GET("api/products", productController.Index)
+	r.GET("api/products/:id", productController.Show)
+	r.GET("api/products/nama/:id", productController.Shownama)
 
 	// Jalankan server
 	r.Run()
